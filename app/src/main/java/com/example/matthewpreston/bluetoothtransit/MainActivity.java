@@ -8,6 +8,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,11 +25,49 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+            }
+        });
+        final BluetoothClient bluetooth = new BluetoothClient();
+        final TextView arrTime = (TextView)this.findViewById(R.id.arrTime);
+        final Spinner routeSpinner = (Spinner)this.findViewById(R.id.routePicker);
+        final Button getButton = (Button)this.findViewById(R.id.getButton);
+        Integer[] routes = new Integer[]{1,2,3,4};
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item, routes);
+        routeSpinner.setAdapter(adapter);
+        routeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                getButton.setEnabled(true);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                getButton.setEnabled(false);
+            }
+        });
+
+
+        getButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int routeNum = Integer.parseInt(routeSpinner.getSelectedItem().toString());
+                bluetooth.send(routeNum);
+                int result = bluetooth.receive();
+
+                String output = "";
+                if (result == -1) {
+                    output = "Route not availble.";
+                } else if (result == 1)
+                    output = result + " minute til bus " + routeNum + " arrives.";
+                else
+                    output = result + " minutes til bus " + routeNum + " arrives.";
+
+                arrTime.setText(output);
             }
         });
     }
@@ -49,4 +93,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }

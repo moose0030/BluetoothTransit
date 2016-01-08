@@ -8,4 +8,12 @@ public class BluetoothClient {
     public BluetoothClient(){
 
     }
+
+    public void send(int routeNum){
+
+    }
+
+    public int receive(){
+        return 1;
+    }
 }
