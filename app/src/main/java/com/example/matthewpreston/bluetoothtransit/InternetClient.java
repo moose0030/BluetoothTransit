@@ -15,14 +15,13 @@ public class InternetClient implements CommunicationClient {
     public InternetClient(){
         socket = new Socket();
     }
-    public boolean connect(String name, String addr){
+    public boolean connect(String addr, String port){
         if(socket.isConnected())
             return true;
 
-        address = new InetSocketAddress(addr,5050);
-
         try
         {
+            address = new InetSocketAddress(addr,Integer.parseInt(port));
             socket.connect(address);
         }
         catch(IOException e)
@@ -59,24 +58,26 @@ public class InternetClient implements CommunicationClient {
     //  if not connected     |   FALSE
     //  if exception         |   FALSE
     //  otherwise            |   TRUE
-    public boolean receive(){
-        byte[] buffer = null;
-
+    public byte[] receive(){
+        byte[] buffer = new byte[1024];
+/*
         if(!socket.isConnected())
             return false;
-
+*/
         try
         {
             socket.getInputStream().read(buffer);
-            System.out.println(buffer.toString());
+            System.out.println("Received: " + buffer.toString());
+
         }
         catch(IOException e)
         {
-            System.out.println(e);
-            return false;
+            System.out.println("Error:" + e);
+            //return false;
         }
-
-        return true;
+        System.out.println("End of receive");
+        return buffer;
+        //return true;
     }
 
     //  Checks if connection is closed

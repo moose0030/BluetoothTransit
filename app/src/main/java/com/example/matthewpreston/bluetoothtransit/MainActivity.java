@@ -1,6 +1,11 @@
 package com.example.matthewpreston.bluetoothtransit;
 
+import android.annotation.TargetApi;
+import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +20,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.nio.charset.StandardCharsets;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 getButton.setEnabled(false);
+
             }
         });
 
@@ -63,11 +71,33 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String routeNum = routeSpinner.getSelectedItem().toString();
-                bluetooth.send(routeNum);
+                //bluetooth.send(routeNum);
                 //int result = bluetooth.receive();
-                int result = 4;
 
-                String output = "";
+
+                new Thread() {
+                    @TargetApi(Build.VERSION_CODES.KITKAT)
+                    public void run() {
+
+                        internet.send(routeSpinner.getSelectedItem().toString());
+                        final byte[] data = internet.receive();
+                        final String s = new String(data, StandardCharsets.UTF_8);
+                        System.out.println(".........sdsl");
+                        if (data != null) {
+                            MainActivity.this.runOnUiThread(new Runnable() {
+                                public void run() {
+                                    Toast.makeText(MainActivity.this, "Finished network transfer" + s, Toast.LENGTH_SHORT).show();
+                                    arrTime.setText("String: " + s + "  Data:" + data + " minutes till arrival.");
+                                }
+                            });
+                        }
+
+                    }
+                }.start();
+            }
+
+
+                /*String output = "";
                 if (result == -1) {
                     output = "Route not availble.";
                 } else if (result == 1)
@@ -75,27 +105,46 @@ public class MainActivity extends AppCompatActivity {
                 else
                     output = result + " minutes til bus " + routeNum + " arrives.";
 
-                arrTime.setText(output);
-            }
+                arrTime.setText(output);*/
         });
 
         btcButton.setOnClickListener(new OnClickListener() {
-        @Override
-            public void onClick (View view){
-                if(!bluetooth.connect("",""))
-                {
+            @Override
+            public void onClick(View view) {
+                int REQUEST_ENABLE_BT = 1;
+                Intent enableBt = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBt, REQUEST_ENABLE_BT);
+
+                //if (!bluetooth.connect("", "")) {
                     Toast.makeText(MainActivity.this, "Did not connect", Toast.LENGTH_SHORT).show();
-                }
+                //}
             }
         });
 
         wfcButton.setOnClickListener(new OnClickListener() {
         @Override
             public void onClick (View view){
-                if(!internet.connect("",""))
+
+            new Thread()
+            {
+                public void run()
                 {
-                    Toast.makeText(MainActivity.this, "Did not connect", Toast.LENGTH_SHORT).show();
+                    if(!internet.connect("192.168.0.18","6789")) {
+                        MainActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText(MainActivity.this, "Did not connect", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                    else{
+                        MainActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText(MainActivity.this, "Connected to " + internet.address.toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
                 }
+            }.start();
             }
     });
     }

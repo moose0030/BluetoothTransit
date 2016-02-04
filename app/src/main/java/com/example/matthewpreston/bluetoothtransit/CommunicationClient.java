@@ -10,6 +10,6 @@ public interface CommunicationClient {
 
     boolean connect(String i, String a);
     boolean send(String data);
-    boolean receive();
+    //boolean receive();
     boolean closeConnection();
 }
