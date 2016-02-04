@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,12 +33,18 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
         final BluetoothClient bluetooth = new BluetoothClient();
+        final InternetClient internet = new InternetClient();
         final TextView arrTime = (TextView)this.findViewById(R.id.arrTime);
         final Spinner routeSpinner = (Spinner)this.findViewById(R.id.routePicker);
         final Button getButton = (Button)this.findViewById(R.id.getButton);
+        final Button btcButton = (Button)this.findViewById(R.id.BT_Connect);
+        final Button wfcButton = (Button)this.findViewById(R.id.WF_Connect);
+
         Integer[] routes = new Integer[]{1,2,3,4};
         ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item, routes);
+
         routeSpinner.setAdapter(adapter);
         routeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -55,9 +62,10 @@ public class MainActivity extends AppCompatActivity {
         getButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                int routeNum = Integer.parseInt(routeSpinner.getSelectedItem().toString());
+                String routeNum = routeSpinner.getSelectedItem().toString();
                 bluetooth.send(routeNum);
-                int result = bluetooth.receive();
+                //int result = bluetooth.receive();
+                int result = 4;
 
                 String output = "";
                 if (result == -1) {
@@ -70,8 +78,27 @@ public class MainActivity extends AppCompatActivity {
                 arrTime.setText(output);
             }
         });
-    }
 
+        btcButton.setOnClickListener(new OnClickListener() {
+        @Override
+            public void onClick (View view){
+                if(!bluetooth.connect("",""))
+                {
+                    Toast.makeText(MainActivity.this, "Did not connect", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        wfcButton.setOnClickListener(new OnClickListener() {
+        @Override
+            public void onClick (View view){
+                if(!internet.connect("",""))
+                {
+                    Toast.makeText(MainActivity.this, "Did not connect", Toast.LENGTH_SHORT).show();
+                }
+            }
+    });
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
