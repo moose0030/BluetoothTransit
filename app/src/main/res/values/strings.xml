@@ -1,4 +1,5 @@
 <resources>
-    <string name="app_name">BluetoothTransit</string>
+    <string name="app_name">Smart Ottawa Public Transit</string>
+    <string name="app_short_name">SOPTS</string>
     <string name="action_settings">Settings</string>
 </resources>

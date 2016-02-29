@@ -10,23 +10,16 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.matthewpreston.bluetoothtransit.MainActivity"
-    tools:showIn="@layout/activity_main">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/arrTime"
-        android:layout_marginTop="33dp"
-        android:layout_below="@+id/getButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+    tools:showIn="@layout/activity_main"
+    android:background="@color/background_material_dark">
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Get Time"
+        android:text="Next Bus Time"
         android:id="@+id/getButton"
-        android:layout_below="@+id/routePicker"
+        android:layout_gravity="top"
+        android:layout_below="@+id/bluetooth_box"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -34,25 +27,116 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/routePicker"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/textView3"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/bluetooth_box"
+        android:layout_toStartOf="@+id/bluetooth_box" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Wifi Connect"
+        android:text="WiFi Connect"
         android:id="@+id/WF_Connect"
-        android:layout_centerVertical="true"
+        android:layout_above="@+id/BT_Connect"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/bluetooth_box"
+        android:layout_toStartOf="@+id/bluetooth_box"
+        android:layout_gravity="top|center" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Bluetooth Connect"
         android:id="@+id/BT_Connect"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/WF_Connect"
-        android:layout_alignParentLeft="true" />
+        android:layout_gravity="center" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Force Bluetooth Connection"
+        android:id="@+id/bluetooth_box"
+        android:layout_below="@+id/wifi_box"
+        android:layout_alignLeft="@+id/wifi_box"
+        android:layout_alignStart="@+id/wifi_box"
+        android:checked="false"
+        android:layout_gravity="bottom"
+        android:textColor="@color/bright_foreground_material_dark"
+        android:buttonTint="@color/background_material_light" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Force WiFi Connection"
+        android:id="@+id/wifi_box"
+        android:checked="false"
+        android:layout_gravity="top"
+        android:layout_alignTop="@+id/routePicker"
+        android:layout_toRightOf="@+id/BT_Connect"
+        android:layout_toEndOf="@+id/BT_Connect"
+        android:textColor="@color/bright_foreground_material_dark"
+        android:buttonTint="@color/background_material_light" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Connect to Station"
+        android:id="@+id/textView"
+        android:layout_above="@+id/WF_Connect"
+        android:textStyle="italic"
+        android:layout_gravity="left"
+        android:textColor="@color/bright_foreground_material_dark" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Results:"
+        android:id="@+id/results"
+        android:layout_below="@+id/BT_Connect"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="37dp"
+        android:layout_gravity="left"
+        android:textColor="@color/bright_foreground_material_dark" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Get Bus Time"
+        android:id="@+id/textView3"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="left"
+        android:textColor="@color/bright_foreground_material_dark"
+        android:textStyle="italic" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Connected"
+        android:id="@+id/wifi_radio"
+        android:checked="true"
+        android:layout_gravity="top|center"
+        android:layout_above="@+id/BT_Connect"
+        android:layout_alignLeft="@+id/bluetooth_radio"
+        android:layout_alignStart="@+id/bluetooth_radio"
+        android:textColor="@color/bright_foreground_material_dark" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Connected"
+        android:id="@+id/bluetooth_radio"
+        android:checked="true"
+        android:layout_alignBottom="@+id/BT_Connect"
+        android:layout_alignRight="@+id/wifi_box"
+        android:layout_alignEnd="@+id/wifi_box"
+        android:layout_gravity="center"
+        android:textColor="@color/bright_foreground_material_dark" />
 </RelativeLayout>

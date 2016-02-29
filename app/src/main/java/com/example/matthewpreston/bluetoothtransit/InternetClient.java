@@ -16,7 +16,7 @@ public class InternetClient implements CommunicationClient {
         socket = new Socket();
     }
     public boolean connect(String addr, String port){
-        if(socket.isConnected())
+        /*if(socket.isConnected())
             return true;
 
         try
@@ -28,8 +28,8 @@ public class InternetClient implements CommunicationClient {
         {
             System.out.println(e);
             return false;
-        }
-        return true;
+        }*/
+        return false;
     }
 
     //  Sends data through socket
