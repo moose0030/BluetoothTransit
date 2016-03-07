@@ -121,23 +121,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String routeNum = routeSpinner.getSelectedItem().toString();
-                //bluetooth.send(routeNum);
-                //int result = bluetooth.receive();
 
 
                 new Thread() {
                     @TargetApi(Build.VERSION_CODES.KITKAT)
                     public void run() {
 
-                        internet.send(routeSpinner.getSelectedItem().toString());
-                        final byte[] data = internet.receive();
-                        final String s = new String(data, StandardCharsets.UTF_8);
-                        System.out.println(".........sdsl");
-                        if (data != null) {
+                        final String result = internet.query(routeSpinner.getSelectedItem().toString());
+                        //final byte[] data = internet.receive();
+                        //final String s = new String(data, StandardCharsets.UTF_8);
+                        if (result != null) {
                             MainActivity.this.runOnUiThread(new Runnable() {
                                 public void run() {
-                                    Toast.makeText(MainActivity.this, "Finished network transfer" + s, Toast.LENGTH_SHORT).show();
-                                    arrTime.append("String: " + s + "  Data:" + data + " minutes till arrival.");
+                                    Toast.makeText(MainActivity.this, "Finished network transfer", Toast.LENGTH_SHORT).show();
+                                    arrTime.append("Data:" + result + "| ");
                                 }
                             });
                         }
@@ -182,12 +179,12 @@ public class MainActivity extends AppCompatActivity {
             {
                 public void run()
                 {
-                    if(!internet.connect("192.168.0.18","6789")) {
+                    if(!internet.testConnection()) {
                         MainActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
                                 Toast.makeText(MainActivity.this, "Did not connect", Toast.LENGTH_SHORT).show();
-                                wifiRadio.setEnabled(true);
-                                String conn = "Connected";
+                                wifiRadio.setEnabled(false);
+                                String conn = "Failed to connect";
                                 wifiRadio.setText(conn.toCharArray(),0,conn.toCharArray().length);
                             }
                         });
@@ -195,7 +192,10 @@ public class MainActivity extends AppCompatActivity {
                     else{
                         MainActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
-                                Toast.makeText(MainActivity.this, "Connected to " + internet.address.toString(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "Connected", Toast.LENGTH_SHORT).show();
+                                wifiRadio.setEnabled(true);
+                                String conn = "Connected";
+                                wifiRadio.setText(conn.toCharArray(), 0, conn.toCharArray().length);
                             }
                         });
                     }

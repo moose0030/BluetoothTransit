@@ -36,7 +36,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bluetooth Connect"
+        android:text="Test Bluetooth"
         android:id="@+id/bluetoothConnectButton"
         android:layout_gravity="center"
         android:layout_below="@+id/wifiConnectButton"
@@ -46,7 +46,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="WiFi Connect"
+        android:text="Test WiFi"
         android:id="@+id/wifiConnectButton"
         android:layout_below="@+id/connectStationDescr"
         android:layout_alignRight="@id/bluetoothConnectButton"
