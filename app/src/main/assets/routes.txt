@@ -1,0 +1,634 @@
+1
+South Keys
+1
+Ottawa-Rockcliffe
+2
+Bayshore
+2
+Downtown
+4
+Rideau Centre
+4
+Carleton
+5
+St-Laurent
+5
+Billings Bridge
+6
+Tunney's Pasture
+6
+Hurdman
+7
+St-Laurent
+7
+Carleton
+8
+Gatineau
+8
+Billings Bridge
+9
+Hurdman
+9
+Rideau Centre
+12
+Downtown
+12
+Blair
+14
+Carlington
+14
+St-Laurent
+16
+Britannia
+16
+Main
+18
+Rideau Centre
+18
+St-Laurent
+20
+Orléans
+20
+Albert / Bay
+21
+Orléans
+21
+Albert / Bay
+22
+Millennium
+22
+Albert / Bay
+24
+Beacon Hill
+24
+Albert / Bay
+27
+Gatineau
+27
+Orléans
+30
+Albert / Bay
+30
+Jeanne d'Arc
+31
+Albert / Bay
+31
+Jeanne d'Arc
+34
+Albert / Bay
+34
+Jeanne d'Arc
+35
+Albert / Bay
+35
+Orléans
+37
+Albert / Bay
+37
+Jeanne d'Arc
+38
+Albert / Bay
+38
+Jeanne d'Arc
+40
+Gatineau
+40
+Blossom Park
+41
+Hurdman
+41
+Walkley
+43
+Hurdman
+43
+Conroy
+60
+Mackenzie King
+60
+Kanata
+61
+Mackenzie King
+61
+Kanata
+62
+Mackenzie King
+62
+Kanata
+64
+Mackenzie King
+64
+Kanata
+65
+Mackenzie King
+65
+Kanata
+66
+Mackenzie King
+66
+Kanata
+67
+Mackenzie King
+67
+Pinecrest
+68
+Mackenzie King
+68
+Kanata
+69
+Mackenzie King
+69
+Bells Corners
+70
+Mackenzie King
+70
+Barrhaven
+71
+Mackenzie King
+71
+Barrhaven
+72
+Mackenzie King
+72
+Barrhaven
+73
+Mackenzie King
+73
+Barrhaven
+77
+Mackenzie King
+77
+Barrhaven
+85
+Lees
+85
+Bayshore
+86
+Elmvale
+86
+Baseline/Colonnade
+87
+South Keys
+87
+Carlingwood/Baseline
+91
+Orléans & Trim
+91
+Baseline
+92
+St-Laurent
+92
+Terry Fox & Stittsville
+93
+Lincoln Fields & LeBreton
+93
+Kanata North
+94
+Millennium
+94
+Riverview
+95
+Orléans & Trim
+95
+Barrhaven Centre
+96
+St-Laurent
+96
+Terry Fox & Stittsville
+97
+Airport
+97
+Bayshore & Bells Corners
+98
+Hawthorne
+98
+LeBreton & Tunney's Pasture
+99
+Greenboro
+99
+Barrhaven Centre & Manotick
+101
+St-Laurent
+101
+Bayshore
+103
+Place d'Orléans
+103
+Bayshore
+104
+Place d'Orléans
+104
+Carleton
+105
+Gatineau
+105
+Tunney's Pasture
+106
+St-Laurent
+106
+Hurdman
+107
+South Keys
+107
+Bayview
+111
+Baseline
+111
+Billings Bridge & Carleton
+112
+Billings Bridge
+112
+Elmvale
+114
+Greenboro
+114
+St-Laurent
+116
+Merivale
+116
+Greenboro & Hurdman
+118
+Kanata
+118
+Hurdman
+120
+Portobello
+120
+Place d'Orléans
+121
+Hurdman
+121
+Blair
+122
+Place d'Orléans
+122
+Millennium
+123
+Beacon Hill / Blair
+124
+St-Laurent
+124
+Beacon Hill
+126
+Pineview
+126
+Blair
+128
+Blair
+128
+Blackburn Hamlet
+129
+Hurdman
+129
+Carson's
+130
+Blair
+130
+Millennium
+131
+Chapel Hill
+131
+Convent Glen
+132
+Sunview
+132
+Place d'Orléans
+134
+Place d'Orléans
+134
+Renaud
+135
+Place d'Orléans
+135
+Esprit
+136
+Tenth Line
+136
+Place d'Orléans
+137
+Queenswood Heights / Place d'Orléans
+140
+Hurdman
+140
+McCarthy
+143
+South Keys
+143
+Conroy
+144
+South Keys
+144
+Leitrim & Gloucester South
+146
+Billings Bridge & Hurdman
+146
+South Keys
+147
+Uplands / South Keys
+148
+Hurdman & Billings Bridge
+148
+Elmvale
+149
+Hurdman
+149
+Elmvale
+150
+Lincoln Fields
+150
+Tunney's Pasture
+151
+Clyde
+151
+Tunney's Pasture
+152
+Moodie
+152
+Lincoln Fields
+153
+Lincoln Fields
+153
+Carlingwood
+154
+Lincoln Fields
+154
+Queensway Terrace
+155
+Bayshore
+155
+Queensway Terrace
+156
+Viewmount
+156
+Baseline
+157
+Amberwood
+157
+Baseline
+159
+Tunney's Pasture / Local
+161
+Terry Fox
+161
+Bridlewood
+162
+Stittsville
+162
+Terry Fox
+164
+Hope Sid
+164
+Terry Fox
+165
+Terry Fox
+165
+Kanata North
+168
+Bridlewood
+168
+Terry Fox
+170
+Barrhaven Centre
+170
+Fallowfield
+171
+Barrhaven Centre
+171
+Fallowfield
+172
+Bayshore
+172
+Lincoln Fields & Baseline
+173
+Fallowfield & Bayshore
+173
+Barrhaven Centre
+174
+Knoxdale
+174
+Baseline
+175
+Barrhaven Centre
+175
+Golflinks
+176
+Tunney's Pasture
+176
+Barrhaven Centre
+177
+Cambrian
+177
+Barrhaven Centre
+178
+Lincoln Fields / Centrepointe
+180
+Haanel
+180
+Bayshore
+181
+Kanata North
+181
+Eagleson
+182
+Lincoln Fields
+182
+Kanata
+185
+LeBreton / Experimental Farm
+186
+Barrhaven Centre
+186
+Manotick
+188
+Huntmar
+188
+Canadian Tire Centre
+189
+Greenboro
+189
+Riverview
+192
+St-Laurent
+192
+Hawthorne
+193
+Blair
+193
+Place d'Orléans
+194
+Blair
+194
+Canotek
+196
+Terry Fox
+196
+Tanger
+199
+Place d'Orléans
+199
+Barrhaven
+201
+Richmond/Stittsville
+201
+Carlingwood
+202
+Navan/Sarsfield/Cumberland
+202
+St-Laurent
+203
+Dunrobin/Carp
+203
+Carlingwood
+204
+Metcalfe/Greely
+204
+Billings Bridge
+205
+Manotick/North Gower/Kars
+205
+Carlingwood
+221
+Cumberland
+221
+Albert / Bay
+231
+Navan
+231
+Albert / Bay
+232
+Vars
+232
+Albert / Bay
+261
+Stittsville
+261
+Mackenzie King
+262
+Stittsville
+262
+Mackenzie King
+263
+Stittsville
+263
+Mackenzie King
+283
+Richmond
+283
+Mackenzie King
+401
+Canadian Tire Centre
+402
+Canadian Tire Centre
+403
+Canadian Tire Centre
+404
+Canadian Tire Centre
+405
+Canadian Tire Centre
+406
+Canadian Tire Centre
+450
+Rideau Centre
+450
+Lansdowne
+451
+Blair
+451
+Lansdowne Park
+452
+South Keys
+452
+Lansdowne Park
+454
+Terry Fox
+454
+Lansdowne
+455
+Trim
+455
+Lansdowne
+456
+Barrhaven Centre
+456
+Lansdowne Park
+602
+Hurdman
+602
+É. S  De La Salle
+611
+Chapel Hill
+611
+É. S. Gisèle Lalonde
+612
+Chapel Hill
+612
+É. S. Gisèle Lalonde
+613
+Immaculata H. S / Downtown
+618
+Orléans
+618
+É. S  Louis Riel
+619
+Blair
+619
+É. S  Louis Riel
+622
+Blackburn/Page
+622
+Colonel By  S.S.
+632
+Queenswood
+632
+É. S. Gisèle Lalonde
+633
+St. Laurent
+633
+Lester B Pearson H.S.
+640
+Greenboro
+640
+Brookfield H.S.
+641
+Orléans
+641
+É. S. Louis Riel
+648
+Chapel Hill
+648
+É. S  Louis Riel
+661
+Kanata Lakes
+661
+Bell H.S.
+665
+Bridlewood
+665
+Bell H.S.
+669
+Bayshore
+669
+Bell H.S.
+670
+Nepean Centre
+670
+St. Pius X H.S.
+674
+Morgans Grant
+674
+All Saints H.S.Stephen Leacock
+678
+Orléans
+678
+É. S  Louis Riel
+681
+Glen Cairn
+681
+Bell H.S.
+691
+Bayshore
+691
+É. S. Deslauriers
+O-Train
+Greenboro
+O-Train
+Bayview

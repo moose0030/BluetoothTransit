@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
@@ -32,14 +33,18 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.UUID;
 
@@ -127,24 +132,57 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
+
+        List<Map<String, String>> items = new ArrayList<Map<String, String>>();
+        File ids = new File(getExternalFilesDir("txt") + File.separator + "routes.txt");
+        InputStream is = null;
+        if (!ids.exists()) {
+            AssetManager manager = getAssets();
+            try {
+                is = manager.open("routes.txt");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if (is != null) {
+
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(is));
+                String line = null;
+
+                StringBuilder responseData = new StringBuilder();
+                try {
+                    while ((line = in.readLine()) != null) {
+                        Map<String, String> item = new HashMap<String, String>(2);
+                        item.put("text", line.trim());
+                        if ((line = in.readLine()) != null)
+                            item.put("subText", line.trim());
+                        items.add(item);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+            try {
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         bluetoothRadio.setButtonTintList(colorStateList);//set the color tint list
         wifiRadio.setButtonTintList(colorStateList);//set the color tint list
 
-        List<Map<String, String>> items = new ArrayList<Map<String, String>>();
-        Map<String, String> item0 = new HashMap<String, String>(2);
-        item0.put("text", "1");
-        item0.put("subText", "Greenboro");
-        items.add(item0);
 
-        Map<String, String> item1 = new HashMap<String, String>(2);
-        item1.put("text", "1");
-        item1.put("subText", "Ottawa-Rockcliffe");
-        items.add(item1);
 
-        Map<String, String> item2 = new HashMap<String, String>(2);
-        item2.put("text", "2");
-        item2.put("subText", "Bayshore");
-        items.add(item2);
+
+
+
+
+
+
 
         SimpleAdapter adapter = new SimpleAdapter(this, items,
                 android.R.layout.simple_list_item_2, // This is the layout that will be used for the standard/static part of the spinner. (You can use android.R.layout.simple_list_item_2 if you want the subText to also be shown here.)
