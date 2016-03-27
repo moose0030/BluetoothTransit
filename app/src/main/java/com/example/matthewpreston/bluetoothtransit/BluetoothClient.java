@@ -1,16 +1,15 @@
 package com.example.matthewpreston.bluetoothtransit;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
+
 import java.io.IOException;
 import java.util.UUID;
-
-import static android.support.v4.app.ActivityCompat.startActivityForResult;
 
 /**
  * Created by matthewpreston on 2016-01-07.
@@ -30,7 +29,7 @@ public class BluetoothClient implements CommunicationClient {
 
             socket = device.createRfcommSocketToServiceRecord(uuid);
         } catch (IOException e) {
-            System.out.println(e);
+            Log.e("Exception", e.toString());
         }
 
         //socket = new BluetoothSocket();
@@ -51,7 +50,7 @@ public class BluetoothClient implements CommunicationClient {
             else
                 return false;
         } catch (IOException e) {
-            System.out.println(e);
+            Log.e("Exception", e.toString());
             return false;
         }
 
@@ -67,7 +66,7 @@ public class BluetoothClient implements CommunicationClient {
         try {
             socket.getOutputStream().write(buffer);
         } catch (IOException e) {
-            System.out.println(e);
+            Log.e("Exception", e.toString());
             return false;
         }
 
@@ -83,7 +82,7 @@ public class BluetoothClient implements CommunicationClient {
         try {
             socket.getInputStream().read(buffer);
         } catch (IOException e) {
-            System.out.println(e);
+            Log.e("Exception", e.toString());
             return false;
         }
 
@@ -100,7 +99,7 @@ public class BluetoothClient implements CommunicationClient {
         try {
             socket.close();
         } catch (IOException e) {
-            System.out.println(e);
+            Log.e("Exception", e.toString());
             return false;
         }
 
@@ -119,6 +118,7 @@ public class BluetoothClient implements CommunicationClient {
             // MY_UUID is the app's UUID string, also used by the client code
             tmp = adapter.listenUsingRfcommWithServiceRecord("", uuid);
         } catch (IOException e) {
+            Log.e("Exception", e.toString());
         }
         mmServerSocket = tmp;
         BluetoothSocket socket = null;

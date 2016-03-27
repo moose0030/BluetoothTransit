@@ -8,9 +8,6 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketAddress;
-import java.net.SocketException;
-import java.util.Arrays;
 
 /**
  * Created by matthewpreston on 2016-01-11.
@@ -62,7 +59,7 @@ public class InternetClient implements CommunicationClient {
         }
         catch(IOException e)
         {
-            System.out.println(e);
+            Log.e("Exception", e.toString());
             return false;
         }
         return true;
@@ -80,8 +77,8 @@ public class InternetClient implements CommunicationClient {
 */
         try
         {
-            socket.getInputStream().read(buffer);
-            System.out.println("Received: " + buffer.toString());
+            if(socket.getInputStream().read(buffer) > 0)
+                System.out.println("Received: " + buffer.toString());
 
         }
         catch(IOException e)
@@ -108,7 +105,7 @@ public class InternetClient implements CommunicationClient {
         }
         catch(IOException e)
         {
-            System.out.println(e);
+            Log.e("Exception", e.toString());
             return false;
         }
         return true;

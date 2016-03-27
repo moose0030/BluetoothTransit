@@ -1,7 +1,5 @@
 package com.example.matthewpreston.bluetoothtransit;
 
-import java.util.Set;
-
 /**
  * Created by matthewpreston on 2016-01-11.
  */
