@@ -15,7 +15,7 @@ import java.net.Socket;
 public class InternetClient implements CommunicationClient {
     Socket socket;
     DatagramSocket sock;
-    InetSocketAddress address;// = new SocketAddress();
+
 
     public InternetClient(){
         socket = new Socket();
@@ -78,7 +78,7 @@ public class InternetClient implements CommunicationClient {
         try
         {
             if(socket.getInputStream().read(buffer) > 0)
-                System.out.println("Received: " + buffer.toString());
+                System.out.println("Received: " + String.valueOf(buffer));
 
         }
         catch(IOException e)
@@ -169,7 +169,7 @@ public class InternetClient implements CommunicationClient {
                     do {
                         sock.receive(packet);
                         s = new String(packet.getData()).trim();
-                    }while(s.equals("REQ") || s.length() ==0);
+                    }while(s.equals("REQ") || s.length() == 0);
 
                     return s;
                 }
