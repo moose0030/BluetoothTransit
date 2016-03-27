@@ -158,21 +158,35 @@ public class MainActivity extends AppCompatActivity {
 
         btcButton.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View view) {
-                //(new Thread(new workerThread(routeSpinner.getSelectedItem().toString()))).start();
+                public void onClick(View view) {
 
-                int REQUEST_ENABLE_BT = 1;
-                Intent enableBt = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(enableBt, REQUEST_ENABLE_BT);
+                    new Thread() {
+                        public void run() {
+                            if (!bluetooth.testConnection()) {
+                                MainActivity.this.runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        Toast.makeText(MainActivity.this, "Did not connect", Toast.LENGTH_SHORT).show();
+                                        bluetoothRadio.setEnabled(false);
+                                        String conn = "Failed to connect";
+                                        bluetoothRadio.setText(conn.toCharArray(), 0, conn.toCharArray().length);
+                                    }
+                                });
+                            } else {
+                                MainActivity.this.runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        Toast.makeText(MainActivity.this, "Connected", Toast.LENGTH_SHORT).show();
+                                        bluetoothRadio.setEnabled(true);
+                                        String conn = "Connected";
+                                        bluetoothRadio.setText(conn.toCharArray(), 0, conn.toCharArray().length);
+                                    }
+                                });
+                            }
+                        }
+                    }.start();
+                }
+            });
 
-                //if (!bluetooth.connect("", "")) {
-                Toast.makeText(MainActivity.this, "Did not connect", Toast.LENGTH_SHORT).show();
-                bluetoothRadio.setEnabled(true);
-                String conn = "Connected";
-                bluetoothRadio.setText(conn.toCharArray(), 0, conn.toCharArray().length);
-                //}
-            }
-        });
+
 
         wfcButton.setOnClickListener(new OnClickListener() {
             @Override

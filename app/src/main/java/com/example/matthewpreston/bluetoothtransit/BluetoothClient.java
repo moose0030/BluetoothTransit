@@ -23,16 +23,18 @@ public class BluetoothClient implements CommunicationClient {
     BluetoothSocket mmSocket;
     BluetoothDevice mmDevice = null;
     Handler handler;
-
+    BluetoothAdapter bluetoothAdapter;
     public BluetoothClient(BluetoothAdapter mBluetoothAdapter){
+        this.bluetoothAdapter = mBluetoothAdapter;
+        setup(bluetoothAdapter);
+    }
 
-
+    public boolean setup(BluetoothAdapter mBluetoothAdapter){
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
         if (pairedDevices.size() > 0) {
             for (BluetoothDevice device : pairedDevices) {
                 if (device.getName().equals("raspberrypi")) //Note, you will need to change this to match the name of your device
                 {
-                    Log.e("Aquarium", device.getName());
                     mmDevice = device;
                     break;
                 }
@@ -42,17 +44,25 @@ public class BluetoothClient implements CommunicationClient {
         try {
             mmSocket = mmDevice.createRfcommSocketToServiceRecord(uuid);
             if (!mmSocket.isConnected()) {
-                mmSocket.connect();
+                try {
+                    mmSocket.connect();
+                }catch (Exception e) {
+                    return false;
+                }
             }
         }catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     public String query(String msg){
 
         try {
+            if(!mmSocket.isConnected())
+                setup(bluetoothAdapter);
             OutputStream mmOutputStream = mmSocket.getOutputStream();
             mmOutputStream.write(msg.getBytes());
             final InputStream mmInputStream;
@@ -68,27 +78,7 @@ public class BluetoothClient implements CommunicationClient {
         return "";
     }
 
-    public void sendBtMsg(String message) {
-        //UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb"); //Standard SerialPortService ID
-        UUID uuid = UUID.fromString("94f39d29-7d6d-437d-973b-fba39e49d4ee"); //Standard SerialPortService ID
-        try {
 
-            mmSocket = mmDevice.createRfcommSocketToServiceRecord(uuid);
-            if (!mmSocket.isConnected()) {
-                mmSocket.connect();
-            }
-
-            String msg = message;
-
-            OutputStream mmOutputStream = mmSocket.getOutputStream();
-            mmOutputStream.write(msg.getBytes());
-
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-    }
 
     @Override
     public boolean connect(String i, String a) {
@@ -105,49 +95,31 @@ public class BluetoothClient implements CommunicationClient {
         return false;
     }
 
-
-    final class workerThread implements Runnable {
-
-        private String btMsg;
-
-        public workerThread(String msg) {
-            btMsg = msg;
-        }
-
-        public void run() {
-            sendBtMsg(btMsg);
-            while (!Thread.currentThread().isInterrupted()) {
-                try {
-                    final InputStream mmInputStream;
-                    mmInputStream = mmSocket.getInputStream();
-                    byte[] readBuffer = new byte[1024];
-                    if (mmInputStream.read(readBuffer) > 0) {
-                        final String data = new String(readBuffer);
-
-                        handler.post(new Runnable() {
-                            public void run() {
-                                //arrTime.append(data);
-                            }
-                        });
-                        break;
-                    } else {
-                        return;
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+    public boolean testConnection(){
+        try {
+            Log.i("BT:testConnection 1",String.valueOf(mmSocket.isConnected()));
+            if(!setup(bluetoothAdapter))
+                return false;
+            OutputStream mmOutputStream = mmSocket.getOutputStream();
+            mmOutputStream.flush();
+            String msg = "TEST_BT";
+            mmOutputStream.write(msg.getBytes());
+            final InputStream mmInputStream;
+            mmInputStream = mmSocket.getInputStream();
+            byte[] readBuffer = new byte[1024];
+            if(mmInputStream.read(readBuffer) > 0) {
+                final String data = new String(readBuffer);
+                if(data.trim().equals("SUCCESS!"))
+                    return true;
             }
-            {
-                try {
-                    mmSocket.close();
+            return false;
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
 
-            }
 
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        return false;
     }
 
 }
