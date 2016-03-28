@@ -29,6 +29,8 @@ public class BluetoothClient {
     }
 
     public boolean setup(BluetoothAdapter mBluetoothAdapter){
+        if (mBluetoothAdapter == null)
+                return false;
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
         if (pairedDevices.size() > 0) {
             for (BluetoothDevice device : pairedDevices) {
@@ -50,14 +52,12 @@ public class BluetoothClient {
                 }
             }
         }catch (IOException e) {
-            e.printStackTrace();
             return false;
         }
         return true;
     }
 
     public String query(String msg){
-
         try {
             if(!mmSocket.isConnected())
                 setup(bluetoothAdapter);
@@ -70,10 +70,10 @@ public class BluetoothClient {
                 final String data = new String(readBuffer);
                 return data;
             }
+            return "Error exchanging with server";
         } catch (IOException e) {
-            e.printStackTrace();
+            return "Error exchanging with server";
         }
-        return "Error exchanging with server";
     }
 
 
@@ -85,7 +85,6 @@ public class BluetoothClient {
         try {
             mmSocket.close();
         }catch (IOException e){
-            e.printStackTrace();
             return false;
         }
         return true;
@@ -93,7 +92,6 @@ public class BluetoothClient {
 
     public boolean testConnection(){
         try {
-            Log.i("BT:testConnection 1", String.valueOf(mmSocket.isConnected()));
             if(!setup(bluetoothAdapter))
                 return false;
             OutputStream mmOutputStream = mmSocket.getOutputStream();
@@ -110,12 +108,8 @@ public class BluetoothClient {
             }
             return false;
 
-
-
         } catch (IOException e) {
-            e.printStackTrace();
+            return false;
         }
-        return false;
     }
-
 }

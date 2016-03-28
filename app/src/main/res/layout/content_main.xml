@@ -19,7 +19,7 @@
         android:text="@string/next_bus_time"
         android:id="@+id/nextBusButton"
         android:layout_gravity="top"
-        android:layout_below="@+id/wifiBox" />
+        android:layout_below="@+id/radioGroup" />
 
     <Spinner
         android:layout_width="match_parent"
@@ -30,29 +30,42 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:popupBackground="@color/colorBackground" />
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/force_bluetooth"
-        android:textColor="@color/bright_foreground_material_dark"
-        android:id="@+id/bluetoothBox"
-        android:layout_toRightOf="@id/wifiBox"
-        android:layout_below="@id/routeSpinner"
-        android:checked="false"
-        android:layout_gravity="bottom"
-        android:layout_marginLeft="@dimen/fab_margin"/>
 
-    <CheckBox
+    <RadioGroup
+
+    android:layout_width="wrap_content"
+
+    android:layout_height="wrap_content"
+android:orientation="horizontal"
+    android:layout_below="@+id/routeSpinner"
+    android:id="@+id/radioGroup"
+    android:checkedButton="@+id/useWifiRadio" >
+
+
+
+    <RadioButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/force_wifi"
         android:textColor="@color/bright_foreground_material_dark"
-        android:id="@+id/wifiBox"
+        android:id="@+id/useWifiRadio"
         android:checked="false"
         android:layout_gravity="top"
         android:layout_alignLeft="@id/nextBusButton"
         android:layout_below="@id/routeSpinner"/>
 
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/force_bluetooth"
+            android:textColor="@color/bright_foreground_material_dark"
+            android:id="@+id/useBluetoothRadio"
+            android:layout_toRightOf="@id/useWifiRadio"
+            android:layout_below="@id/routeSpinner"
+            android:checked="false"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="@dimen/fab_margin"/>
+</RadioGroup>
 
 
     <Button
@@ -117,13 +130,14 @@
         android:layout_height="wrap_content"
         android:text="@string/not_connected"
         android:id="@+id/wifiRadio"
-        android:checked="true"
+        android:checked="false"
         android:textColor="@color/bright_foreground_material_dark"
         android:layout_gravity="top|center"
         android:layout_alignTop="@id/wifiConnectButton"
         android:layout_above="@+id/bluetoothConnectButton"
         android:layout_toRightOf="@id/wifiConnectButton"
         android:layout_toEndOf="@id/wifiConnectButton"
+        android:clickable="false"
         android:layout_marginLeft="@dimen/fab_margin"/>
 
     <RadioButton
@@ -135,7 +149,8 @@
         android:layout_alignTop="@id/bluetoothConnectButton"
         android:layout_toRightOf="@id/bluetoothConnectButton"
         android:layout_toEndOf="@id/bluetoothConnectButton"
-        android:checked="true"
+        android:checked="false"
+        android:clickable="false"
         android:layout_alignBottom="@+id/bluetoothConnectButton"
         android:layout_marginLeft="@dimen/fab_margin"
         android:layout_gravity="center"/>

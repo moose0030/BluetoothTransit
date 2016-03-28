@@ -86,10 +86,8 @@ public class InternetClient {
             try {
                 //Keep a socket open to listen to all the UDP trafic that is destined for this port
 
-
                 while (true) {
                     Log.i("", "Ready to receive broadcast packets!");
-
 
                     //Receive a packet
                     byte[] recvBuf = new byte[15000];
@@ -116,8 +114,7 @@ public class InternetClient {
                     return s;
                 }
             } catch (IOException ex) {
-                Log.i("", "Oops" + ex.getMessage());
-                return "Error";
+                return "Error exchanging with server";
             }
 
     }

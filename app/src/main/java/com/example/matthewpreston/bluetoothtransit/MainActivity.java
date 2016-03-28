@@ -4,24 +4,23 @@ import android.annotation.TargetApi;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.res.AssetManager;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.text.format.Time;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +28,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import android.text.format.Time;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,98 +51,88 @@ public class MainActivity extends AppCompatActivity {
         final Button testWifiButton = (Button) this.findViewById(R.id.wifiConnectButton);
         final RadioButton wifiRadio = (RadioButton) this.findViewById(R.id.wifiRadio);
         final RadioButton bluetoothRadio = (RadioButton) this.findViewById(R.id.bluetoothRadio);
-        final CheckBox wifiBox = (CheckBox) this.findViewById(R.id.wifiBox);
-        final CheckBox bluetoothBox = (CheckBox) this.findViewById(R.id.bluetoothBox);
-
-        bluetoothRadio.setEnabled(false);
-        wifiRadio.setEnabled(false);
-
+        final RadioButton useWifiRadio = (RadioButton) this.findViewById(R.id.useWifiRadio);
+        final RadioButton useBluetoothRadio = (RadioButton) this.findViewById(R.id.useBluetoothRadio);
 
         List<String> items = new ArrayList<String>();
         initRouteSpinner(items);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.new_spinner,items);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.new_spinner, items);
         routeSpinner.setAdapter(adapter);
 
         routeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {getButton.setEnabled(true);}
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                getButton.setEnabled(true);
+            }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {getButton.setEnabled(false);}
+            public void onNothingSelected(AdapterView<?> parent) {
+                getButton.setEnabled(false);
+            }
         });
 
         getButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                new Thread() {
+                    @TargetApi(Build.VERSION_CODES.KITKAT)
+                    public void run() {
+                        final String route = routeSpinner.getSelectedItem().toString();
+                        final String result;
+                        final String status = "Finished network transfer";
+                        final Time now = new Time();
+                        now.setToNow();
 
-                if (bluetoothBox.isChecked() && !wifiBox.isChecked()) {
-                    new Thread() {
-                        @TargetApi(Build.VERSION_CODES.KITKAT)
-                        public void run() {
-                            final String route = routeSpinner.getSelectedItem().toString();
-                            final String result = bluetooth.query(route);
-
-                            if (result != null) {
-                                MainActivity.this.runOnUiThread(new Runnable() {
-                                    public void run() {
-                                        Toast.makeText(MainActivity.this, "Finished network transfer", Toast.LENGTH_SHORT).show();
-                                        Time now = new Time();
-                                        now.setToNow();
-                                        arrTime.append("\n" + now.hour + ":" + now.minute + ":" + now.second + " " + route  +  " " + result);
-                                    }
-                                });
-                            }
-
+                        if (useBluetoothRadio.isChecked() && !useWifiRadio.isChecked()) {
+                            result = bluetooth.query(route);
+                        } else if (!useBluetoothRadio.isChecked() && useWifiRadio.isChecked()) {
+                            result = internet.query(routeSpinner.getSelectedItem().toString());
+                        } else {
+                            result = internet.query(routeSpinner.getSelectedItem().toString());
                         }
-                    }.start();
-                } else if (!bluetoothBox.isChecked() && wifiBox.isChecked()) {
-                    new Thread() {
-                        @TargetApi(Build.VERSION_CODES.KITKAT)
-                        public void run() {
-                            final String result = internet.query(routeSpinner.getSelectedItem().toString());
 
-                            if (result != null) {
-                                MainActivity.this.runOnUiThread(new Runnable() {
-                                    public void run() {
-                                        Toast.makeText(MainActivity.this, "Finished network transfer", Toast.LENGTH_SHORT).show();
-                                        Time now = new Time();
-                                        now.setToNow();
-                                        arrTime.append("\n" + now.hour + ":" + now.minute + ":" + now.second + " " + result);
-                                    }
-                                });
+                        MainActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText(MainActivity.this, status, Toast.LENGTH_SHORT).show();
+                                arrTime.append("\n" + now.hour + ":" + now.minute + ":" + now.second + " " + route + " " + result);
                             }
-                        }
-                    }.start();
-                }
+                        });
+                    }
+                }.start();
             }
+
+
         });
 
         testBluetoothButton.setOnClickListener(new OnClickListener() {
             @Override
-            //TODO: Have one UI thread that prints the status instead of three
             public void onClick(View view) {
                 new Thread() {
                     public void run() {
                         final String status;
                         final boolean enable;
-                        if(isBluetoothOn(mBluetoothAdapter)) {
-                            if (!bluetooth.testConnection()) {
-                                status = "Failed to connect";
-                                enable = false;
+                        if(bluetooth != null) {
+                            if (isBluetoothOn(mBluetoothAdapter)) {
+                                if (!bluetooth.testConnection()) {
+                                    status = "Failed to connect";
+                                    enable = false;
 
-                            } else {
-                                status = "Success";
-                                enable = true;
+                                } else {
+                                    status = "Success";
+                                    enable = true;
+                                }
+                            }else {
+                                status = "Failed to use Bluetooth adapter";
+                                enable = false;
                             }
-                        }
-                        else{
+                        } else {
                             status = "Failed to use Bluetooth adapter";
                             enable = false;
                         }
                         MainActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
                                 Toast.makeText(MainActivity.this, status, Toast.LENGTH_SHORT).show();
-                                bluetoothRadio.setEnabled(enable);
+                                bluetoothRadio.setChecked(enable);
                                 bluetoothRadio.setText(status.toCharArray(), 0, status.toCharArray().length);
                             }
                         });
@@ -171,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
                                 Toast.makeText(MainActivity.this, status, Toast.LENGTH_SHORT).show();
-                                wifiRadio.setEnabled(enable);
+                                wifiRadio.setChecked(enable);
                                 wifiRadio.setText(status.toCharArray(), 0, status.toCharArray().length);
                             }
                         });
@@ -179,8 +167,6 @@ public class MainActivity extends AppCompatActivity {
                 }.start();
             }
         });
-
-
 
 
     }
@@ -196,8 +182,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if(id == R.id.action_about){
-            int RESULT_ABOUT=0;
+        if (id == R.id.action_about) {
+            int RESULT_ABOUT = 0;
             Intent i = new Intent(this, AboutActivity.class);
             startActivityForResult(i, RESULT_ABOUT);
         }
@@ -205,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public boolean isBluetoothOn(BluetoothAdapter mBluetoothAdapter){
+    public boolean isBluetoothOn(BluetoothAdapter mBluetoothAdapter) {
         if (!mBluetoothAdapter.isEnabled()) {
             Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBluetooth, 0);
@@ -213,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
         return mBluetoothAdapter.isEnabled();
     }
 
-    public void initRouteSpinner(List<String> items){
+    public void initRouteSpinner(List<String> items) {
         File ids = new File(getExternalFilesDir("txt") + File.separator + "routes.txt");
         InputStream is = null;
         if (!ids.exists()) {
