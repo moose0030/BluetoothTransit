@@ -18,15 +18,14 @@ import java.util.UUID;
 /**
  * Created by matthewpreston on 2016-01-07.
  */
-public class BluetoothClient implements CommunicationClient {
+public class BluetoothClient {
 
-    BluetoothSocket mmSocket;
+    BluetoothSocket mmSocket = null;
     BluetoothDevice mmDevice = null;
     Handler handler;
     BluetoothAdapter bluetoothAdapter;
     public BluetoothClient(BluetoothAdapter mBluetoothAdapter){
         this.bluetoothAdapter = mBluetoothAdapter;
-        setup(bluetoothAdapter);
     }
 
     public boolean setup(BluetoothAdapter mBluetoothAdapter){
@@ -51,7 +50,6 @@ public class BluetoothClient implements CommunicationClient {
                 }
             }
         }catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             return false;
         }
@@ -75,29 +73,27 @@ public class BluetoothClient implements CommunicationClient {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "";
+        return "Error exchanging with server";
     }
 
 
 
-    @Override
-    public boolean connect(String i, String a) {
-        return false;
-    }
 
-    @Override
-    public boolean send(String data) {
-        return false;
-    }
-
-    @Override
     public boolean closeConnection() {
-        return false;
+        if(!mmSocket.isConnected())
+            return true;
+        try {
+            mmSocket.close();
+        }catch (IOException e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     public boolean testConnection(){
         try {
-            Log.i("BT:testConnection 1",String.valueOf(mmSocket.isConnected()));
+            Log.i("BT:testConnection 1", String.valueOf(mmSocket.isConnected()));
             if(!setup(bluetoothAdapter))
                 return false;
             OutputStream mmOutputStream = mmSocket.getOutputStream();

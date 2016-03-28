@@ -11,26 +11,47 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.matthewpreston.bluetoothtransit.MainActivity"
     tools:showIn="@layout/activity_main"
-    android:background="@android:color/darker_gray">
+    android:background="@color/colorBackground">
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/next_bus_time"
         android:id="@+id/nextBusButton"
         android:layout_gravity="top"
-        android:layout_below="@+id/routeSpinner" />
+        android:layout_below="@+id/wifiBox" />
 
     <Spinner
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/routeSpinner"
+        android:spinnerMode="dropdown"
         android:layout_below="@+id/getBusDescr"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/nextBusButton"
-        android:layout_alignEnd="@+id/nextBusButton"
-        android:spinnerMode="dialog" />
+        android:popupBackground="@color/colorBackground" />
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/force_bluetooth"
+        android:textColor="@color/bright_foreground_material_dark"
+        android:id="@+id/bluetoothBox"
+        android:layout_toRightOf="@id/wifiBox"
+        android:layout_below="@id/routeSpinner"
+        android:checked="false"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="@dimen/fab_margin"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/force_wifi"
+        android:textColor="@color/bright_foreground_material_dark"
+        android:id="@+id/wifiBox"
+        android:checked="false"
+        android:layout_gravity="top"
+        android:layout_alignLeft="@id/nextBusButton"
+        android:layout_below="@id/routeSpinner"/>
 
 
 
@@ -55,43 +76,22 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/force_bluetooth"
-        android:id="@+id/bluetoothBox"
-        android:layout_below="@+id/wifiBox"
-        android:layout_alignLeft="@+id/wifiBox"
-        android:layout_alignStart="@+id/wifiBox"
-        android:checked="false"
-        android:layout_gravity="bottom" />
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/force_wifi"
-        android:id="@+id/wifiBox"
-        android:checked="false"
-        android:layout_gravity="top"
-        android:layout_alignTop="@+id/routeSpinner"
-        android:layout_toRightOf="@+id/routeSpinner"
-        android:layout_toEndOf="@+id/routeSpinner"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/connect_station"
         android:id="@+id/connectStationDescr"
         android:layout_marginTop="@dimen/fab_margin"
         android:layout_below="@+id/nextBusButton"
-        android:textStyle="italic"
         android:layout_gravity="start"
         android:textColor="@color/bright_foreground_material_dark" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/results"
         android:id="@+id/resultsDescr"
         android:layout_below="@+id/bluetoothConnectButton"
@@ -104,13 +104,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/get_bus_time"
         android:id="@+id/getBusDescr"
         android:layout_alignParentTop="true"
         android:layout_gravity="start"
         android:textColor="@color/bright_foreground_material_dark"
-        android:textStyle="italic" />
+         />
 
     <RadioButton
         android:layout_width="wrap_content"
@@ -118,20 +118,26 @@
         android:text="@string/not_connected"
         android:id="@+id/wifiRadio"
         android:checked="true"
+        android:textColor="@color/bright_foreground_material_dark"
         android:layout_gravity="top|center"
+        android:layout_alignTop="@id/wifiConnectButton"
         android:layout_above="@+id/bluetoothConnectButton"
         android:layout_toRightOf="@id/wifiConnectButton"
-        android:layout_toEndOf="@id/wifiConnectButton"/>
+        android:layout_toEndOf="@id/wifiConnectButton"
+        android:layout_marginLeft="@dimen/fab_margin"/>
 
     <RadioButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/not_connected"
         android:id="@+id/bluetoothRadio"
+        android:textColor="@color/bright_foreground_material_dark"
+        android:layout_alignTop="@id/bluetoothConnectButton"
         android:layout_toRightOf="@id/bluetoothConnectButton"
         android:layout_toEndOf="@id/bluetoothConnectButton"
         android:checked="true"
         android:layout_alignBottom="@+id/bluetoothConnectButton"
+        android:layout_marginLeft="@dimen/fab_margin"
         android:layout_gravity="center"/>
 
     <ScrollView
@@ -147,7 +153,7 @@
             android:id="@+id/results"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/background_material_light" />
+            android:textColor="@color/bright_foreground_material_dark" />
 
     </ScrollView>
 

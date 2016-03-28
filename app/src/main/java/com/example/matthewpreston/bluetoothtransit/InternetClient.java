@@ -15,7 +15,7 @@ import android.text.format.Time;
 /**
  * Created by matthewpreston on 2016-01-11.
  */
-public class InternetClient implements CommunicationClient {
+public class InternetClient {
     DatagramSocket sock;
 
     public InternetClient(){
@@ -26,14 +26,6 @@ public class InternetClient implements CommunicationClient {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-    public boolean connect(String addr, String port){
-        return false;
-    }
-
-    @Override
-    public boolean send(String data) {
-        return false;
     }
 
 
