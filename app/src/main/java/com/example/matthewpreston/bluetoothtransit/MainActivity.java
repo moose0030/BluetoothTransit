@@ -39,11 +39,16 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        isBluetoothOn(mBluetoothAdapter);
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        if (!mBluetoothAdapter.isEnabled()) {
+            Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBluetooth, 0);
+        }
+        final BluetoothClient bluetooth = new BluetoothClient(mBluetoothAdapter);
 
         final InternetClient internet = new InternetClient();
-        final BluetoothClient bluetooth = new BluetoothClient(mBluetoothAdapter);
+
         final TextView arrTime = (TextView) this.findViewById(R.id.results);
         final Spinner routeSpinner = (Spinner) this.findViewById(R.id.routeSpinner);
         final Button getButton = (Button) this.findViewById(R.id.nextBusButton);
@@ -93,8 +98,8 @@ public class MainActivity extends AppCompatActivity {
 
                         MainActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
-                                Toast.makeText(MainActivity.this, status, Toast.LENGTH_SHORT).show();
-                                arrTime.append("\n" + now.hour + ":" + now.minute + ":" + now.second + " " + route + " " + result);
+                                //Toast.makeText(MainActivity.this, status, Toast.LENGTH_SHORT).show();
+                                arrTime.setText("\n" + now.hour + ":" + now.minute + ":" + now.second + " " + route + " " + result + arrTime.getText());
                             }
                         });
                     }
@@ -111,9 +116,7 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         final String status;
                         final boolean enable;
-                        if(bluetooth != null) {
-                            if (isBluetoothOn(mBluetoothAdapter)) {
-                                if (!bluetooth.testConnection()) {
+                             if(!bluetooth.testConnection()){
                                     status = "Failed to connect";
                                     enable = false;
 
@@ -121,17 +124,10 @@ public class MainActivity extends AppCompatActivity {
                                     status = "Success";
                                     enable = true;
                                 }
-                            }else {
-                                status = "Failed to use Bluetooth adapter";
-                                enable = false;
-                            }
-                        } else {
-                            status = "Failed to use Bluetooth adapter";
-                            enable = false;
-                        }
+
                         MainActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
-                                Toast.makeText(MainActivity.this, status, Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(MainActivity.this, status, Toast.LENGTH_SHORT).show();
                                 bluetoothRadio.setChecked(enable);
                                 bluetoothRadio.setText(status.toCharArray(), 0, status.toCharArray().length);
                             }
@@ -158,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         MainActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
-                                Toast.makeText(MainActivity.this, status, Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(MainActivity.this, status, Toast.LENGTH_SHORT).show();
                                 wifiRadio.setChecked(enable);
                                 wifiRadio.setText(status.toCharArray(), 0, status.toCharArray().length);
                             }
@@ -189,14 +185,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public boolean isBluetoothOn(BluetoothAdapter mBluetoothAdapter) {
-        if (!mBluetoothAdapter.isEnabled()) {
-            Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBluetooth, 0);
-        }
-        return mBluetoothAdapter.isEnabled();
     }
 
     public void initRouteSpinner(List<String> items) {

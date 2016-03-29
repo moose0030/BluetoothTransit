@@ -20,47 +20,45 @@ import java.util.UUID;
  */
 public class BluetoothClient {
 
-    BluetoothSocket mmSocket = null;
+    BluetoothSocket mmSocket;
     BluetoothDevice mmDevice = null;
     Handler handler;
-    BluetoothAdapter bluetoothAdapter;
-    public BluetoothClient(BluetoothAdapter mBluetoothAdapter){
-        this.bluetoothAdapter = mBluetoothAdapter;
-    }
+    boolean inUse = false;
 
-    public boolean setup(BluetoothAdapter mBluetoothAdapter){
-        if (mBluetoothAdapter == null)
-                return false;
+    public BluetoothClient(BluetoothAdapter mBluetoothAdapter){
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
         if (pairedDevices.size() > 0) {
             for (BluetoothDevice device : pairedDevices) {
-                if (device.getName().equals("raspberrypi")) //Note, you will need to change this to match the name of your device
+                if (device.getName().equals("raspberrypi"))
                 {
+                    Log.e("raspberrypi", device.getName());
                     mmDevice = device;
                     break;
                 }
             }
         }
         UUID uuid = UUID.fromString("94f39d29-7d6d-437d-973b-fba39e49d4ee"); //Standard SerialPortService ID
+
         try {
             mmSocket = mmDevice.createRfcommSocketToServiceRecord(uuid);
+
             if (!mmSocket.isConnected()) {
-                try {
-                    mmSocket.connect();
-                }catch (Exception e) {
-                    return false;
-                }
+                mmSocket.connect();
+                Log.e("socket",mmSocket.toString());
             }
         }catch (IOException e) {
-            return false;
+            e.printStackTrace();
         }
-        return true;
     }
 
     public String query(String msg){
+        if(inUse)
+            return "Bluetooth in use";
+        else
+            inUse = true;
+
         try {
-            if(!mmSocket.isConnected())
-                setup(bluetoothAdapter);
+            //Log.e("mmsocket",mmSocket.getOutputStream());
             OutputStream mmOutputStream = mmSocket.getOutputStream();
             mmOutputStream.write(msg.getBytes());
             final InputStream mmInputStream;
@@ -68,14 +66,21 @@ public class BluetoothClient {
             byte[] readBuffer = new byte[1024];
             if (mmInputStream.read(readBuffer) > 0) {
                 final String data = new String(readBuffer);
+                inUse = false;
+                //mmOutputStream.close();
+                //mmInputStream.close();
                 return data;
             }
-            return "Error exchanging with server";
+            //mmOutputStream.close();
+            //mmInputStream.close();
         } catch (IOException e) {
+            e.printStackTrace();
+            inUse = false;
+
             return "Error exchanging with server";
         }
+        return "Empty read";
     }
-
 
 
 
@@ -91,11 +96,13 @@ public class BluetoothClient {
     }
 
     public boolean testConnection(){
+        if(inUse)
+            return false;
+        else
+            inUse = true;
+
         try {
-            if(!setup(bluetoothAdapter))
-                return false;
             OutputStream mmOutputStream = mmSocket.getOutputStream();
-            mmOutputStream.flush();
             String msg = "TEST_BT";
             mmOutputStream.write(msg.getBytes());
             final InputStream mmInputStream;
@@ -103,12 +110,18 @@ public class BluetoothClient {
             byte[] readBuffer = new byte[1024];
             if(mmInputStream.read(readBuffer) > 0) {
                 final String data = new String(readBuffer);
-                if(data.trim().equals("SUCCESS!"))
+                if(data.trim().equals("SUCCESS!")) {
+                    inUse = false;
                     return true;
+                }
             }
+
+            inUse = false;
             return false;
 
         } catch (IOException e) {
+            inUse = false;
+
             return false;
         }
     }

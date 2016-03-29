@@ -157,19 +157,18 @@ android:orientation="horizontal"
 
     <ScrollView
         android:id="@+id/SCROLLER_ID"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scrollbars="vertical"
         android:layout_below="@+id/resultsDescr"
-        android:fillViewport="true">
-
+        android:fillViewport="true"
+        android:background="#389d93">
 
         <TextView
             android:id="@+id/results"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/bright_foreground_material_dark" />
-
     </ScrollView>
 
 

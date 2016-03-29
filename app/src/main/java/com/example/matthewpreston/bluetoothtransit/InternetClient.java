@@ -17,12 +17,13 @@ import android.text.format.Time;
  */
 public class InternetClient {
     DatagramSocket sock;
-
+    public boolean inUse = false;
     public InternetClient(){
         try {
         sock = new DatagramSocket(3034, InetAddress.getByName("0.0.0.0"));
             sock.setSoTimeout(5000);
             sock.setBroadcast(true);
+            sock.setReuseAddress(true);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -44,10 +45,12 @@ public class InternetClient {
 
     public boolean testConnection()
     {
+        if(inUse)
+            return false;
+        else
+            inUse = true;
         try {
             //Keep a socket open to listen to all the UDP trafic that is destined for this port
-
-
             while (true) {
                 Log.i("", "Ready to receive broadcast packets!");
                 //Receive a packet
@@ -72,17 +75,23 @@ public class InternetClient {
                     sock.receive(packet);
                     s = new String(packet.getData()).trim();
                 }while(s.equals("REQ") || s.length() == 0);
-
+                inUse = false;
                 return true;
             }
         } catch (IOException ex) {
             Log.i("", "Oops" + ex.getMessage());
+            inUse = false;
             return false;
         }
     }
 
     public String query(String input)
     {
+        if(inUse)
+            return "Socket in use";
+        else{
+            inUse = true;
+        }
             try {
                 //Keep a socket open to listen to all the UDP trafic that is destined for this port
 
@@ -110,10 +119,11 @@ public class InternetClient {
                         sock.receive(packet);
                         s = new String(packet.getData()).trim();
                     }while(s.equals("REQ") || s.length() == 0);
-
+                    inUse = false;
                     return s;
                 }
             } catch (IOException ex) {
+                inUse = false;
                 return "Error exchanging with server";
             }
 
