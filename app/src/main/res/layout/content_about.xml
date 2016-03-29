@@ -9,6 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/colorBackground"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.matthewpreston.bluetoothtransit.AboutActivity"
     tools:showIn="@layout/activity_about">
@@ -17,14 +18,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Developed By"
+            android:text="@string/developed_by"
+            android:textColor="@color/bright_foreground_material_dark"
             android:id="@+id/textView" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Matthew Preston"
+            android:textColor="@color/bright_foreground_material_dark"
+            android:text="@string/matthew_preston"
             android:id="@+id/textView2" />
 
     <TextView
@@ -32,21 +35,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Data Provided By"
+        android:text="@string/data_provided"
+        android:textColor="@color/bright_foreground_material_dark"
         android:id="@+id/textView" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="OC Transpo"
+        android:text="@string/octranspo"
+        android:textColor="@color/bright_foreground_material_dark"
         android:id="@+id/textView2" />
     <TextView
         android:layout_marginTop="@dimen/fab_margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Description"
+        android:text="@string/description"
+        android:textColor="@color/bright_foreground_material_dark"
         android:id="@+id/textView" />
 
     <TextView
@@ -54,6 +60,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="This project was originally created and developed for my Honours Project at Carleton University. The entire project involves this application working with a Raspberry Pi server to deliver OC Transpo bus arrival times through Bluetooth and WiFi."
+        android:textColor="@color/bright_foreground_material_dark"
         android:id="@+id/textView2" />
 
     <TextView
@@ -61,21 +68,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Contact"
+        android:textColor="@color/bright_foreground_material_dark"
+        android:text="@string/contact"
         android:id="@+id/textView" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Email: matthew.preston@carleton.ca"
+        android:text="@string/email"
+        android:textColor="@color/bright_foreground_material_dark"
         android:id="@+id/textView2" />
     <TextView
         android:layout_marginTop="@dimen/fab_margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="List of Technologies Used"
+        android:text="@string/list_tech"
+        android:textColor="@color/bright_foreground_material_dark"
         android:id="@+id/textView" />
 
     <TextView
@@ -83,6 +93,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Raspberry Pi\nPython\nBluetooth RFCOMM\nUDP Broadcast\nMySQL\nAndroid\n"
+        android:textColor="@color/bright_foreground_material_dark"
         android:id="@+id/textView2" />
 
     </LinearLayout>

@@ -1,23 +1,21 @@
 package com.example.matthewpreston.bluetoothtransit;
 
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.util.Log;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import android.text.format.Time;
 
 /**
  * Created by matthewpreston on 2016-01-11.
  */
-public class InternetClient {
-    DatagramSocket sock;
-    public boolean inUse = false;
+
+//TODO: simplify query and testConnection to one with a modified query
+class InternetClient {
+    private DatagramSocket sock;
+    private boolean inUse = false;
+
     public InternetClient(){
         try {
         sock = new DatagramSocket(3034, InetAddress.getByName("0.0.0.0"));
@@ -51,7 +49,6 @@ public class InternetClient {
             inUse = true;
         try {
             //Keep a socket open to listen to all the UDP trafic that is destined for this port
-            while (true) {
                 Log.i("", "Ready to receive broadcast packets!");
                 //Receive a packet
                 byte[] recvBuf = new byte[15000];
@@ -77,7 +74,6 @@ public class InternetClient {
                 }while(s.equals("REQ") || s.length() == 0);
                 inUse = false;
                 return true;
-            }
         } catch (IOException ex) {
             Log.i("", "Oops" + ex.getMessage());
             inUse = false;
@@ -95,7 +91,6 @@ public class InternetClient {
             try {
                 //Keep a socket open to listen to all the UDP trafic that is destined for this port
 
-                while (true) {
                     Log.i("", "Ready to receive broadcast packets!");
 
                     //Receive a packet
@@ -121,7 +116,6 @@ public class InternetClient {
                     }while(s.equals("REQ") || s.length() == 0);
                     inUse = false;
                     return s;
-                }
             } catch (IOException ex) {
                 inUse = false;
                 return "Error exchanging with server";
