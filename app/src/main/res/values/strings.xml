@@ -3,11 +3,11 @@
     <string name="app_short_name">SOPTS</string>
     <string name="connected">Connected</string>
     <string name="not_connected">Not Connected</string>
-    <string name="connect_station">Connect to Station</string>
-    <string name="get_bus_time">Get Bus Time</string>
+    <string name="connect_station">Test Connection</string>
+    <string name="get_bus_time">Choose Bus Route:</string>
     <string name="force_bluetooth">Use Bluetooth</string>
     <string name="force_wifi">Use WiFi</string>
-    <string name="next_bus_time">Next Bus Time</string>
+    <string name="next_bus_time">Find Next Bus Arrival</string>
     <string name="test_wifi">Test WiFi</string>
     <string name="test_bluetooth">Test Bluetooth</string>
     <string name="results">Results</string>

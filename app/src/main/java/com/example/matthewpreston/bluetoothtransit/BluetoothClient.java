@@ -80,7 +80,7 @@ class BluetoothClient {
     }
 
 
-    public boolean closeConnection() {
+    public boolean close() {
         if (!mmSocket.isConnected())
             return true;
         try {

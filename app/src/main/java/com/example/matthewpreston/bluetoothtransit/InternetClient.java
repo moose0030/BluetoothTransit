@@ -19,7 +19,7 @@ class InternetClient {
     public InternetClient(){
         try {
         sock = new DatagramSocket(3034, InetAddress.getByName("0.0.0.0"));
-            sock.setSoTimeout(5000);
+            sock.setSoTimeout(10000);
             sock.setBroadcast(true);
             sock.setReuseAddress(true);
         } catch (Exception e) {
@@ -121,5 +121,12 @@ class InternetClient {
                 return "Error exchanging with server";
             }
 
+    }
+
+    public boolean close(){
+        if(sock!=null)
+            sock.close();
+
+        return true;
     }
 }

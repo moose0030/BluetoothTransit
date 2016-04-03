@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
 import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
@@ -17,6 +18,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -27,11 +29,17 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    BluetoothClient bluetooth;
+    InternetClient internet;
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
 
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        final BluetoothClient bluetooth = new BluetoothClient(mBluetoothAdapter);
-        final InternetClient internet = new InternetClient();
+        bluetooth = new BluetoothClient(mBluetoothAdapter);
+        internet = new InternetClient();
 
         final TextView arrTime = (TextView) this.findViewById(R.id.results);
         final Spinner routeSpinner = (Spinner) this.findViewById(R.id.routeSpinner);
@@ -54,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
         final RadioButton bluetoothRadio = (RadioButton) this.findViewById(R.id.bluetoothRadio);
         final RadioButton useWifiRadio = (RadioButton) this.findViewById(R.id.useWifiRadio);
         final RadioButton useBluetoothRadio = (RadioButton) this.findViewById(R.id.useBluetoothRadio);
+        final ProgressBar progressBar = (ProgressBar) this.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
 
         List<String> items = new ArrayList<>();
         initRouteSpinner(items);
@@ -75,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         getButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
                 new Thread() {
                     @TargetApi(Build.VERSION_CODES.KITKAT)
                     public void run() {
@@ -95,12 +106,16 @@ public class MainActivity extends AppCompatActivity {
 
                             MainActivity.this.runOnUiThread(new Runnable() {
                                 public void run() {
-                                    arrTime.setText("\n" + now.hour + ":" + now.minute + ":" + now.second + " " + route + " " + result + arrTime.getText());
+
+                                    arrTime.setText(route + result + "\n" + arrTime.getText());
+                                    progressBar.setVisibility(View.INVISIBLE);
+
                                 }
                             });
                         } else {
                             checkBluetoothConnection();
                             bluetooth.setup(BluetoothAdapter.getDefaultAdapter());
+                            progressBar.setVisibility(View.INVISIBLE);
                         }
                     }
                 }.start();
@@ -112,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
         testBluetoothButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
                 new Thread() {
                     public void run() {
                         final String status;
@@ -130,11 +146,13 @@ public class MainActivity extends AppCompatActivity {
                                     Toast.makeText(MainActivity.this, status, Toast.LENGTH_SHORT).show();
                                     bluetoothRadio.setChecked(enable);
                                     bluetoothRadio.setText(status.toCharArray(), 0, status.toCharArray().length);
+                                    progressBar.setVisibility(View.INVISIBLE);
                                 }
                             });
                         } else {
                             checkBluetoothConnection();
                             bluetooth.setup(BluetoothAdapter.getDefaultAdapter());
+                            progressBar.setVisibility(View.INVISIBLE);
                         }
                     }
                 }.start();
@@ -176,6 +194,13 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    @Override
+    public void onDestroy(){
+        bluetooth.close();
+        internet.close();
+        super.onDestroy();
     }
 
     @Override
@@ -226,6 +251,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+
 
     private void checkBluetoothConnection(){
             Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);

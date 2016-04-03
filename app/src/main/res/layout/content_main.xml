@@ -14,7 +14,7 @@
     tools:showIn="@layout/activity_main">
 
     <Button
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/next_bus_time"
         android:id="@+id/nextBusButton"
@@ -29,7 +29,8 @@
         android:layout_below="@+id/getBusDescr"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:popupBackground="@color/colorBackground" />
+        android:background="@android:drawable/btn_dropdown"
+        android:popupBackground="@color/bright_foreground_material_dark"/>
 
     <RadioGroup
 
@@ -166,6 +167,16 @@ android:orientation="horizontal"
             android:layout_height="wrap_content"
             android:textColor="@color/bright_foreground_material_dark" />
     </ScrollView>
+
+    <ProgressBar
+        android:indeterminate="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_above="@+id/wifiRadio"
+        android:layout_alignTop="@id/nextBusButton"
+        android:layout_alignBottom="@id/nextBusButton"
+        android:layout_toRightOf="@+id/nextBusButton"/>
 
 
 </RelativeLayout>
