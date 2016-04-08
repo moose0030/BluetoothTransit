@@ -91,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         final String route = routeSpinner.getSelectedItem().toString();
                         final String result;
-                        final Time now = new Time();
-                        now.setToNow();
+                        final long before = new Date().getTime();
+
 
                         if (BluetoothAdapter.getDefaultAdapter().isEnabled()) {
                             if (useBluetoothRadio.isChecked() && !useWifiRadio.isChecked()) {
@@ -106,8 +106,9 @@ public class MainActivity extends AppCompatActivity {
 
                             MainActivity.this.runOnUiThread(new Runnable() {
                                 public void run() {
+                                    final long after = new Date().getTime();
 
-                                    arrTime.setText(route + result + "\n" + arrTime.getText());
+                                    arrTime.setText(route + result + "\n" + arrTime.getText() + (after-before)+",");
                                     progressBar.setVisibility(View.INVISIBLE);
 
                                 }
@@ -128,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 progressBar.setVisibility(View.VISIBLE);
+                final long before = new Date().getTime();
                 new Thread() {
                     public void run() {
                         final String status;
@@ -143,9 +145,11 @@ public class MainActivity extends AppCompatActivity {
 
                             MainActivity.this.runOnUiThread(new Runnable() {
                                 public void run() {
-                                    Toast.makeText(MainActivity.this, status, Toast.LENGTH_SHORT).show();
+                                    final long after = new Date().getTime();
+                                    Toast.makeText(MainActivity.this, status + "," + (after - before), Toast.LENGTH_SHORT).show();
                                     bluetoothRadio.setChecked(enable);
                                     bluetoothRadio.setText(status.toCharArray(), 0, status.toCharArray().length);
+
                                     progressBar.setVisibility(View.INVISIBLE);
                                 }
                             });
@@ -162,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
         testWifiButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                final long before = new Date().getTime();
                 new Thread() {
                     public void run() {
                         final String status;
@@ -176,7 +181,8 @@ public class MainActivity extends AppCompatActivity {
                         }
                         MainActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
-                                Toast.makeText(MainActivity.this, status, Toast.LENGTH_SHORT).show();
+                                final long after = new Date().getTime();
+                                Toast.makeText(MainActivity.this, status + "," + (after - before), Toast.LENGTH_SHORT).show();
                                 wifiRadio.setChecked(enable);
                                 wifiRadio.setText(status.toCharArray(), 0, status.toCharArray().length);
                             }
