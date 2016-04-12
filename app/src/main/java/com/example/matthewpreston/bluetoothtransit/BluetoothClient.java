@@ -81,12 +81,14 @@ class BluetoothClient {
 
 
     public boolean close() {
-        if (!mmSocket.isConnected())
-            return true;
-        try {
-            mmSocket.close();
-        } catch (IOException e) {
-            return false;
+        if(mmSocket != null) {
+            if (!mmSocket.isConnected())
+                return true;
+            try {
+                mmSocket.close();
+            } catch (IOException e) {
+                return false;
+            }
         }
         return true;
     }
