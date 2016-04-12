@@ -26,6 +26,7 @@ class BluetoothClient {
     public void setup(BluetoothAdapter bt) {
         Set<BluetoothDevice> pairedDevices = bt.getBondedDevices();
         BluetoothDevice mmDevice = null;
+
         if (pairedDevices.size() > 0) {
             for (BluetoothDevice device : pairedDevices) {
                 if (device.getName().equals("raspberrypi")) {
@@ -52,8 +53,8 @@ class BluetoothClient {
     }
 
     public String query(String msg) {
-        if (inUse) {
-            return "Bluetooth in use";
+        if (inUse || !mmSocket.isConnected()) {
+            return "Bluetooth cannot be accessed right now.";
         } else {
             inUse = true;
         }
@@ -94,7 +95,7 @@ class BluetoothClient {
     }
 
     public boolean testConnection() {
-        if (inUse) {
+        if (inUse || !mmSocket.isConnected()) {
             return false;
         } else {
             inUse = true;

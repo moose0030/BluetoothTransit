@@ -93,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
                         final String result;
                         final long before = new Date().getTime();
 
-
                         if (BluetoothAdapter.getDefaultAdapter().isEnabled()) {
                             if (useBluetoothRadio.isChecked() && !useWifiRadio.isChecked()) {
                                 checkBluetoothConnection();
@@ -107,22 +106,22 @@ public class MainActivity extends AppCompatActivity {
                             MainActivity.this.runOnUiThread(new Runnable() {
                                 public void run() {
                                     final long after = new Date().getTime();
-
-                                    arrTime.setText(route + result + "\n" + arrTime.getText() + (after-before)+",");
+                                    arrTime.setText(route + result + "\n" + arrTime.getText() + (after - before) + ",");
                                     progressBar.setVisibility(View.INVISIBLE);
-
                                 }
                             });
                         } else {
-                            checkBluetoothConnection();
                             bluetooth.setup(BluetoothAdapter.getDefaultAdapter());
                             progressBar.setVisibility(View.INVISIBLE);
+                            MainActivity.this.runOnUiThread(new Runnable() {
+                                public void run() {
+                                    Toast.makeText(MainActivity.this, "Could not connect", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
                     }
                 }.start();
             }
-
-
         });
 
         testBluetoothButton.setOnClickListener(new OnClickListener() {
@@ -149,14 +148,22 @@ public class MainActivity extends AppCompatActivity {
                                     Toast.makeText(MainActivity.this, status + "," + (after - before), Toast.LENGTH_SHORT).show();
                                     bluetoothRadio.setChecked(enable);
                                     bluetoothRadio.setText(status.toCharArray(), 0, status.toCharArray().length);
-
                                     progressBar.setVisibility(View.INVISIBLE);
                                 }
                             });
-                        } else {
-                            checkBluetoothConnection();
+                        }else {
+                            enable = false;
+                            status = "Failed to connect";
                             bluetooth.setup(BluetoothAdapter.getDefaultAdapter());
-                            progressBar.setVisibility(View.INVISIBLE);
+                            MainActivity.this.runOnUiThread(new Runnable() {
+                                public void run() {
+                                    final long after = new Date().getTime();
+                                    Toast.makeText(MainActivity.this, status, Toast.LENGTH_SHORT).show();
+                                    bluetoothRadio.setChecked(enable);
+                                    bluetoothRadio.setText(status.toCharArray(), 0, status.toCharArray().length);
+                                    progressBar.setVisibility(View.INVISIBLE);
+                                }
+                            });
                         }
                     }
                 }.start();
@@ -193,8 +200,6 @@ public class MainActivity extends AppCompatActivity {
                 }.start();
             }
         });
-
-
     }
 
     @Override
@@ -251,19 +256,17 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
 
-
-
     private void checkBluetoothConnection(){
-            Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBluetooth, 0);
+        Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+        startActivityForResult(enableBluetooth, 0);
     }
 }

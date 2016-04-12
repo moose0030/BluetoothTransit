@@ -43,7 +43,7 @@ class InternetClient {
 
     public boolean testConnection()
     {
-        if(inUse)
+        if(inUse || !sock.isConnected())
             return false;
         else
             inUse = true;
@@ -83,7 +83,7 @@ class InternetClient {
 
     public String query(String input)
     {
-        if(inUse)
+        if(inUse || sock.isConnected())
             return "Socket in use";
         else{
             inUse = true;
