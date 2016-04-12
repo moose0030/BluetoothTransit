@@ -166,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
         testWifiButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
                 final long before = new Date().getTime();
                 new Thread() {
                     public void run() {
@@ -185,6 +186,7 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(MainActivity.this, status + "," + (after - before), Toast.LENGTH_SHORT).show();
                                 wifiRadio.setChecked(enable);
                                 wifiRadio.setText(status.toCharArray(), 0, status.toCharArray().length);
+                                progressBar.setVisibility(View.INVISIBLE);
                             }
                         });
                     }
