@@ -11,7 +11,6 @@ import java.net.InetAddress;
  * Created by matthewpreston on 2016-01-11.
  */
 
-//TODO: simplify query and testConnection to one with a modified query
 class InternetClient {
     private DatagramSocket sock;
     private boolean inUse = false;
@@ -43,7 +42,7 @@ class InternetClient {
 
     public boolean testConnection()
     {
-        if(inUse || !sock.isConnected())
+        if(inUse)
             return false;
         else
             inUse = true;
@@ -83,7 +82,7 @@ class InternetClient {
 
     public String query(String input)
     {
-        if(inUse || sock.isConnected())
+        if(inUse)
             return "Socket in use";
         else{
             inUse = true;
