@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                             MainActivity.this.runOnUiThread(new Runnable() {
                                 public void run() {
                                     final long after = new Date().getTime();
-                                    arrTime.setText(route + result + "\n" + arrTime.getText() + (after - before) + ",");
+                                    arrTime.setText(route + result + "\n" + arrTime.getText());
                                     progressBar.setVisibility(View.INVISIBLE);
                                 }
                             });
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
                             MainActivity.this.runOnUiThread(new Runnable() {
                                 public void run() {
                                     final long after = new Date().getTime();
-                                    Toast.makeText(MainActivity.this, status + "," + (after - before), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MainActivity.this, status , Toast.LENGTH_SHORT).show();
                                     bluetoothRadio.setChecked(enable);
                                     bluetoothRadio.setText(status.toCharArray(), 0, status.toCharArray().length);
                                     progressBar.setVisibility(View.INVISIBLE);
@@ -190,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
                                 final long after = new Date().getTime();
-                                Toast.makeText(MainActivity.this, status + "," + (after - before), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, status, Toast.LENGTH_SHORT).show();
                                 wifiRadio.setChecked(enable);
                                 wifiRadio.setText(status.toCharArray(), 0, status.toCharArray().length);
                                 progressBar.setVisibility(View.INVISIBLE);
