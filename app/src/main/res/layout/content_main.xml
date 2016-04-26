@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,172 +11,195 @@
     android:background="@color/colorBackground"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.matthewpreston.bluetoothtransit.MainActivity"
-    tools:showIn="@layout/activity_main">
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/next_bus_time"
-        android:id="@+id/nextBusButton"
-        android:layout_gravity="top"
-        android:layout_below="@+id/radioGroup" />
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/routeSpinner"
-        android:spinnerMode="dropdown"
-        android:layout_below="@+id/getBusDescr"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="@android:drawable/btn_dropdown"
-        android:popupBackground="@color/bright_foreground_material_dark"/>
-
-    <RadioGroup
-
-    android:layout_width="wrap_content"
-
-    android:layout_height="wrap_content"
-android:orientation="horizontal"
-    android:layout_below="@+id/routeSpinner"
-    android:id="@+id/radioGroup"
-    android:checkedButton="@+id/useWifiRadio" >
-
-
-
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/force_wifi"
-        android:textColor="@color/bright_foreground_material_dark"
-        android:id="@+id/useWifiRadio"
-        android:checked="false"
-        android:layout_gravity="top"
-        />
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/force_bluetooth"
-            android:textColor="@color/bright_foreground_material_dark"
-            android:id="@+id/useBluetoothRadio"
-            android:checked="false"
-            android:layout_gravity="bottom"
-            android:layout_marginStart="@dimen/fab_margin"/>
-</RadioGroup>
-
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/test_bluetooth"
-        android:id="@+id/bluetoothConnectButton"
-        android:layout_gravity="center"
-        android:layout_below="@+id/wifiConnectButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/test_wifi"
-        android:id="@+id/wifiConnectButton"
-        android:layout_below="@+id/connectStationDescr"
-        android:layout_alignEnd="@id/bluetoothConnectButton"
-        android:layout_alignRight="@id/bluetoothConnectButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/connect_station"
-        android:id="@+id/connectStationDescr"
-        android:layout_marginTop="@dimen/fab_margin"
-        android:layout_below="@+id/nextBusButton"
-        android:layout_gravity="start"
-        android:textColor="@color/bright_foreground_material_dark" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/results"
-        android:id="@+id/resultsDescr"
-        android:layout_below="@+id/bluetoothConnectButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="@dimen/fab_margin"
-        android:layout_gravity="start"
-        android:textColor="@color/bright_foreground_material_dark" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/get_bus_time"
-        android:id="@+id/getBusDescr"
-        android:layout_alignParentTop="true"
-        android:layout_gravity="start"
-        android:textColor="@color/bright_foreground_material_dark"
-         />
-
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/not_connected"
-        android:id="@+id/wifiRadio"
-        android:checked="false"
-        android:textColor="@color/bright_foreground_material_dark"
-        android:layout_gravity="top|center"
-        android:layout_alignTop="@id/wifiConnectButton"
-        android:layout_above="@+id/bluetoothConnectButton"
-        android:layout_toRightOf="@id/wifiConnectButton"
-        android:layout_toEndOf="@id/wifiConnectButton"
-        android:clickable="false"
-        android:layout_marginStart="@dimen/fab_margin"/>
-
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/not_connected"
-        android:id="@+id/bluetoothRadio"
-        android:textColor="@color/bright_foreground_material_dark"
-        android:layout_alignTop="@id/bluetoothConnectButton"
-        android:layout_toRightOf="@id/bluetoothConnectButton"
-        android:layout_toEndOf="@id/bluetoothConnectButton"
-        android:checked="false"
-        android:clickable="false"
-        android:layout_alignBottom="@+id/bluetoothConnectButton"
-        android:layout_marginStart="@dimen/fab_margin"
-        android:layout_gravity="center"/>
-
-    <ScrollView
-        android:id="@+id/SCROLLER_ID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scrollbars="vertical"
-        android:layout_below="@+id/resultsDescr"
-        android:fillViewport="true">
-
-        <TextView
-            android:id="@+id/results"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/bright_foreground_material_dark" />
-    </ScrollView>
-
-    <ProgressBar
-        android:indeterminate="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/progressBar"
-        android:layout_above="@+id/wifiRadio"
-        android:layout_alignTop="@id/nextBusButton"
-        android:layout_alignBottom="@id/nextBusButton"
-        android:layout_toRightOf="@+id/nextBusButton"/>
-
+    >
 
 </RelativeLayout>
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:paddingBottom="@dimen/activity_vertical_margin"-->
+    <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+    <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+    <!--android:paddingTop="@dimen/activity_vertical_margin"-->
+    <!--android:background="@color/colorBackground"-->
+    <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+    <!--tools:context="com.example.matthewpreston.bluetoothtransit.MainActivity"-->
+    <!--tools:showIn="@layout/activity_main">-->
+    <!--<android.support.v7.widget.Toolbar-->
+        <!--android:id="@+id/my_toolbar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="?attr/actionBarSize"-->
+        <!--android:background="?attr/colorPrimary"-->
+        <!--android:elevation="4dp"-->
+        <!--android:theme="@style/ThemeOverlay.AppCompat.ActionBar"-->
+        <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>-->
+
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/next_bus_time"-->
+        <!--android:id="@+id/nextBusButton"-->
+        <!--android:layout_gravity="top"-->
+        <!--android:layout_below="@+id/radioGroup" />-->
+
+    <!--<Spinner-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/routeSpinner"-->
+        <!--android:spinnerMode="dropdown"-->
+        <!--android:layout_below="@+id/getBusDescr"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:background="@android:drawable/btn_dropdown"-->
+        <!--android:popupBackground="@color/bright_foreground_material_dark"/>-->
+
+    <!--<RadioGroup-->
+
+    <!--android:layout_width="wrap_content"-->
+
+    <!--android:layout_height="wrap_content"-->
+<!--android:orientation="horizontal"-->
+    <!--android:layout_below="@+id/routeSpinner"-->
+    <!--android:id="@+id/radioGroup"-->
+    <!--android:checkedButton="@+id/useWifiRadio" >-->
+
+
+
+    <!--<RadioButton-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/force_wifi"-->
+        <!--android:textColor="@color/bright_foreground_material_dark"-->
+        <!--android:id="@+id/useWifiRadio"-->
+        <!--android:checked="false"-->
+        <!--android:layout_gravity="top"-->
+        <!--/>-->
+
+        <!--<RadioButton-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/force_bluetooth"-->
+            <!--android:textColor="@color/bright_foreground_material_dark"-->
+            <!--android:id="@+id/useBluetoothRadio"-->
+            <!--android:checked="false"-->
+            <!--android:layout_gravity="bottom"-->
+            <!--android:layout_marginStart="@dimen/fab_margin"/>-->
+<!--</RadioGroup>-->
+
+
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/test_bluetooth"-->
+        <!--android:id="@+id/bluetoothConnectButton"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_below="@+id/wifiConnectButton"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true" />-->
+
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/test_wifi"-->
+        <!--android:id="@+id/wifiConnectButton"-->
+        <!--android:layout_below="@+id/connectStationDescr"-->
+        <!--android:layout_alignEnd="@id/bluetoothConnectButton"-->
+        <!--android:layout_alignRight="@id/bluetoothConnectButton"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true" />-->
+
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+        <!--android:text="@string/connect_station"-->
+        <!--android:id="@+id/connectStationDescr"-->
+        <!--android:layout_marginTop="@dimen/fab_margin"-->
+        <!--android:layout_below="@+id/nextBusButton"-->
+        <!--android:layout_gravity="start"-->
+        <!--android:textColor="@color/bright_foreground_material_dark" />-->
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+        <!--android:text="@string/results"-->
+        <!--android:id="@+id/resultsDescr"-->
+        <!--android:layout_below="@+id/bluetoothConnectButton"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_marginTop="@dimen/fab_margin"-->
+        <!--android:layout_gravity="start"-->
+        <!--android:textColor="@color/bright_foreground_material_dark" />-->
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+        <!--android:text="@string/get_bus_time"-->
+        <!--android:id="@+id/getBusDescr"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_gravity="start"-->
+        <!--android:textColor="@color/bright_foreground_material_dark"-->
+         <!--/>-->
+
+    <!--<RadioButton-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/not_connected"-->
+        <!--android:id="@+id/wifiRadio"-->
+        <!--android:checked="false"-->
+        <!--android:textColor="@color/bright_foreground_material_dark"-->
+        <!--android:layout_gravity="top|center"-->
+        <!--android:layout_alignTop="@id/wifiConnectButton"-->
+        <!--android:layout_above="@+id/bluetoothConnectButton"-->
+        <!--android:layout_toRightOf="@id/wifiConnectButton"-->
+        <!--android:layout_toEndOf="@id/wifiConnectButton"-->
+        <!--android:clickable="false"-->
+        <!--android:layout_marginStart="@dimen/fab_margin"/>-->
+
+    <!--<RadioButton-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/not_connected"-->
+        <!--android:id="@+id/bluetoothRadio"-->
+        <!--android:textColor="@color/bright_foreground_material_dark"-->
+        <!--android:layout_alignTop="@id/bluetoothConnectButton"-->
+        <!--android:layout_toRightOf="@id/bluetoothConnectButton"-->
+        <!--android:layout_toEndOf="@id/bluetoothConnectButton"-->
+        <!--android:checked="false"-->
+        <!--android:clickable="false"-->
+        <!--android:layout_alignBottom="@+id/bluetoothConnectButton"-->
+        <!--android:layout_marginStart="@dimen/fab_margin"-->
+        <!--android:layout_gravity="center"/>-->
+
+    <!--<ScrollView-->
+        <!--android:id="@+id/SCROLLER_ID"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:scrollbars="vertical"-->
+        <!--android:layout_below="@+id/resultsDescr"-->
+        <!--android:fillViewport="true">-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/results"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textColor="@color/bright_foreground_material_dark" />-->
+    <!--</ScrollView>-->
+
+    <!--<ProgressBar-->
+        <!--android:indeterminate="true"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/progressBar"-->
+        <!--android:layout_above="@+id/wifiRadio"-->
+        <!--android:layout_alignTop="@id/nextBusButton"-->
+        <!--android:layout_alignBottom="@id/nextBusButton"-->
+        <!--android:layout_toRightOf="@+id/nextBusButton"/>-->
+
+
+<!--</RelativeLayout>-->
